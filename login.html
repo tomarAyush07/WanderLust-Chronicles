@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WANDERLUST CHRONICLES</title>
+    <link rel="icon" type="image/x-icon" href="ayushtravels.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #1A237E;
+            --accent-color: #FFD700;
+            --background-color: #F5F5DC;
+            --text-color: #333333;
+            --border-color: #ccc;
+            --error-color: #e74c3c;
+        }
+
+        body, h1, h2, h3, p, a {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px var(--accent-color);
+        }
+
+        /* Password Strength Indicator */
+        .password-strength {
+            height: 5px;
+            width: 100%;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        .strength-weak {
+            background-color: red;
+        }
+
+        .strength-medium {
+            background-color: orange;
+        }
+
+        .strength-strong {
+            background-color: green;
+        }
+
+        .show-password {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: var(--accent-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            margin-top: 15px;
+            font-size: 1em;
+            display: none;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media only screen and (max-width: 600px) {
+            .login-container {
+                padding: 25px;
+            }
+
+            button[type="submit"] {
+                font-size: 1.1em;
+            }
+
+            footer p {
+                font-size: 0.8em;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .login-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to Your Account</h1>
+
+        <form id="loginForm" onsubmit="return validateLogin(event)">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" minlength="8" required oninput="checkPasswordStrength()">
+                <span class="show-password" onclick="togglePassword()">👁️ Show Password</span>
+                <div id="password-strength" class="password-strength"></div>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div id="error-message" class="error-message">
+            <p>Invalid credentials. <a href="register.html">Register here</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Ayush Tours. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function validateLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const storedEmail = localStorage.getItem('userEmail');
+            const storedPassword = localStorage.getItem('userPassword');
+            
+            if (email === storedEmail && password === storedPassword) {
+                window.location.href = 'project2.html';  
+            } else {
+                displayError("Invalid credentials. Please check your email and password.");
+            }
+        }
+
+        function displayError(message) {
+            const errorMessageDiv = document.getElementById('error-message');
+            errorMessageDiv.innerHTML = `<p>${message} <a href="register.html">Register here</a></p>`;
+            errorMessageDiv.style.display = 'block';
+        }
+
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordType = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = passwordType;
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('password-strength');
+            let strength = 0;
+
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[a-z]/.test(password)) strength += 1;
+            if (/\d/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+            if (strength < 2) {
+                strengthBar.className = 'password-strength strength-weak';
+            } else if (strength < 4) {
+                strengthBar.className = 'password-strength strength-medium';
+            } else {
+                strengthBar.className = 'password-strength strength-strong';
+            }
+        }
+    </script>
+</body>
+</html>

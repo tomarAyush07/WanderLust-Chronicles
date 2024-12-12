@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WANDERLUST CHRONICLES</title>
+    <link rel="icon" type="image/x-icon" href="images/ayushtravels.jpg">
+    <link rel="stylesheet" href="css/service.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/subs.css">
+    <style>
+         body{
+            font-family: 'Georgia', serif; 
+            margin: 0;
+            padding: 0;
+            color: white;
+            height: 100vh;
+            text-align: center;
+        }
+        body {
+          background-image: url('images/hawamahal.png');
+          background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed; 
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            color: #fff;
+        }
+        .background {
+           backdrop-filter: blur(30px);
+           box-shadow: 0px 0px 30px rgba(227,228,237,0.37);
+           border: 2px solid rgba(255,255,255,0.18);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding:10px 40px;
+        }
+
+        .logo-container {
+            flex: 1;
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .head {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-title {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: 2px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+        .navbar li {
+            display: inline;
+        }
+        .navbar a.menu {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s ease-in-out;
+        }
+        .navbar a.menu:hover {
+            color: black;
+        }
+        .auth-links {
+            font-size: 1.1em;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .auth-links a {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .auth-links a:hover {
+            color: black;
+        }
+        .profile-popover {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            z-index: 1000;
+        }
+        .profile-content {
+            text-align: center;
+        }
+        .profile-content h2 {
+            color:blue;
+        }
+        .profile-content p {
+            margin: 10px 0;
+        }
+        .profile-content .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo-container {
+                margin-bottom: 20px;
+            }
+
+            .navbar {
+                flex-direction: column;
+            }
+
+            .navbar ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .auth-links {
+                font-size: 1em;
+            }
+        }
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+}
+      </style>
+</head>
+<body>
+    <div class="background">
+        <div class="header">
+            <div class="logo-container">
+                <img src="images/hawamahal.png" alt="Logo" class="logo">
+            </div>
+            <div class="head">
+                <h1 class="header-title">WANDERLUST CHRONICLES</h1>
+            </div>
+            <div class="auth-links" id="user-profile">
+                <span id="user-name"></span> | <a href="#" onclick="toggleProfile()">Profile</a> | <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="aboutus.html" class="menu">About Us</a></li>
+                <li><a href="tourpackage.html" class="menu">Tour Packages</a></li>
+                <li><a href="destination.html" class="menu">Destinations</a></li>
+                <li><a href="blog.html" class="menu">Blog</a></li>
+                <li><a href="contact.html" class="menu">Contact Us</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="profile-popover" class="profile-popover" style="display: none;">
+        <div class="profile-content">
+            <span class="close" onclick="toggleProfile()">&times;</span>
+            <h2 style="color: purple;">Account Details</h2>
+            <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+            <p><strong>Phone Number:</strong> <span id="phone"></span></p>
+            <p><strong>Address:</strong> <span id="address"></span></p>
+            <p><strong>Email:</strong> <span id="emailDisplay"></span></p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userName = localStorage.getItem('userFullName');
+            if (userName) {
+                document.getElementById('user-profile').style.display = 'block';
+                document.getElementById('user-name').textContent = userName;
+            }
+        });
+
+        function toggleProfile() {
+            const popover = document.getElementById('profile-popover');
+            if (popover.style.display === 'block') {
+                popover.style.display = 'none';
+            } else {
+                popover.style.display = 'block';
+                document.getElementById('fullName').textContent = localStorage.getItem('userFullName');
+                document.getElementById('phone').textContent = localStorage.getItem('userPhone');
+                document.getElementById('address').textContent = localStorage.getItem('userAddress');
+                document.getElementById('emailDisplay').textContent = localStorage.getItem('userEmail');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userFullName');
+            localStorage.removeItem('userPhone');
+            localStorage.removeItem('userAddress');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userPassword');
+            window.location.href = 'project.html';
+        }
+    </script>
+    <br><br><br><br><br><br><br><br>
+
+    <center><div class="container" style="display: flex; align-items: center; min-height: 100px;">
+        <span style="--i:1"><img src="images/taj.jpeg" alt="tajmahal" ></span>
+        <span style="--i:2"><img src="images/hawamahal.png" alt="hawamahal" ></span>
+        <span style="--i:3"><img src="images/arunachal.jpeg" alt="arunachal" ></span>
+        <span style="--i:4"><img src="images/balaji.jpeg" alt="balaji" ></span>
+        <span style="--i:5"><img src="images/kashi.jpeg" alt="kashi" ></span>
+        <span style="--i:6"><img src="images/kedarnath.jpeg" alt="kedarnath" ></span>
+        <span style="--i:7"><img src="images/rameshwaram.jpeg" alt="rameshwaram" ></span>
+        <span style="--i:8"><img src="images/rammandir.jpeg" alt="rammandir" ></span>
+        <span style="--i:9"><img src="images/sikkim.jpeg" alt="sikkim"></span>
+        <span style="--i:10"><img src="images/somnath.jpeg" alt="somnath"></span>
+        <span style="--i:11"><img src="images/bengal.jpeg" alt="bengal" ></span>
+        <span style="--i:12"><img src="images/banglore.jpg" alt="banglore"></span>
+    </div></center><br><br><br><br><br>
+    <main>
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-card">
+            <i class="fas fa-plane"></i>
+            <h3>Luxury Tours</h3>
+            <p>Experience the finest in travel with our exclusive luxury tours.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-hiking"></i>
+            <h3>Adventure Trips</h3>
+            <p>For thrill-seekers, our adventure trips offer the ultimate excitement.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-concierge-bell"></i>
+            <h3>Custom Packages</h3>
+            <p>Tailor-made packages to suit your preferences and budget.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-ship"></i>
+            <h3>Cruise Vacations</h3>
+            <p>Sail away on a luxurious cruise with stunning views.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-mountain"></i>
+            <h3>Eco Tours</h3>
+            <p>Explore nature with our eco-friendly tour options.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-skiing"></i>
+            <h3>Winter Sports</h3>
+            <p>Enjoy the thrill of winter sports in the best destinations.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-spa"></i>
+            <h3>Wellness Retreats</h3>
+            <p>Rejuvenate with our luxurious wellness retreats.</p>
+        </div>
+        <div class="service-card" >
+            <i class="fas fa-utensils"></i>
+            <h3>Gastronomy Tours</h3>
+            <p>Indulge in culinary delights with our gastronomy tours.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-campground"></i>
+            <h3>Camping Adventures</h3>
+            <p>Experience the great outdoors with our camping adventures.</p>
+        </div>
+        <div class="service-card" >
+            <i class="fas fa-bicycle"></i>
+            <h3>Cycling Tours</h3>
+            <p>Discover scenic routes on guided cycling tours.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-camera"></i>
+            <h3>Photography Trips</h3>
+            <p>Capture stunning landscapes with our photography tours.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-tree"></i>
+            <h3>Wildlife Safaris</h3>
+            <p>Experience the thrill of wildlife safaris in exotic locations.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-water"></i>
+            <h3>Water Sports</h3>
+            <p>Enjoy activities like jet-skiing, kayaking, and more.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-city"></i>
+            <h3>City Tours</h3>
+            <p>Explore the culture and history of iconic cities worldwide.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-umbrella-beach"></i>
+            <h3>Beach Holidays</h3>
+            <p>Relax and unwind on pristine beaches with crystal-clear waters.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-globe"> </i>
+            <h3>Global Expeditions</h3>
+            <p>Venture on global expeditions to the most unique locations on Earth.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-heart"></i>
+            <h3>Romantic Getaways</h3>
+            <p>Experience unforgettable romantic escapes with your loved one.</p>
+        </div>
+    </section>  
+</main>
+<script src="script.js"></script><br><br><br>
+
+<div class="chatbox-icon" onclick="toggleChatbox()">
+    💬
+</div>
+
+<div class="chatbox-container" id="chatboxContainer">
+    <div class="chatbox-header">
+        <h3>TourBot</h3>
+    </div>
+    <div class="chatbox-messages" id="chatboxMessages">
+    </div>
+    <div class="chatbox-input-container">
+        <input type="text" id="chatInput" class="chatbox-input" placeholder="Ask something..." />
+        <button class="chatbox-send-btn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+<script>
+    function toggleChatbox() {
+        let chatbox = document.getElementById('chatboxContainer');
+        chatbox.style.display = (chatbox.style.display === 'none' || chatbox.style.display === '') ? 'flex' : 'none';
+    }
+    function botResponse(message) {
+        let response = '';
+
+        if (message.includes('tour') || message.includes('destination')) {
+            response = "We offer various tours like luxury tours, adventure trips, and cruise vacations. What are you interested in?";
+        } else if (message.includes('offers')) {
+            response = "Check out our latest offers on the homepage for exclusive deals on tours!";
+        } else {
+            response = "I'm not sure about that. Can I assist you with anything else related to tours and travels?";
+        }
+        return response;
+    }
+    function sendMessage() {
+        let userMessage = document.getElementById('chatInput').value;
+        if (userMessage.trim() === '') return;
+        displayMessage(userMessage, 'user');
+        let botMessage = botResponse(userMessage);
+        setTimeout(() => {
+            displayMessage(botMessage, 'bot');
+        }, 1000);
+        document.getElementById('chatInput').value = '';
+    }
+    function displayMessage(message, sender) {
+        let messageContainer = document.getElementById('chatboxMessages');
+        let messageElement = document.createElement('div');
+        messageElement.classList.add('chatbox-message');
+        if (sender === 'user') {
+            messageElement.classList.add('user-message');
+        } else {
+            messageElement.classList.add('bot-message');
+        }
+        messageElement.innerText = message;
+        messageContainer.appendChild(messageElement);
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+</script>
+
+
+<section class="combined-sections" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('images/hawamahal.png'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 20px; text-align: center; color: white; border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px); position: relative; z-index: 1;">
+<div class="subscription-section"style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url('images/tent.jpg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 20px; text-align: center; color: white; border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); backdrop-filter: blur(12px); position: relative; z-index: 1;">
+    <h2 style="color: rgb(241, 19, 241);">Get the Latest Deals and Offers</h2>
+    <p>Subscribe to our newsletter and stay updated with the best travel deals and news.</p>
+    <div class="subscription-form">
+        <input type="email" placeholder="Enter your email" class="email-input" id="email">
+        <button class="subs"style="background-color:purple;" onclick="subscribe();">Subscribe</button>
+    </div>
+</div>
+<div class="referral-section" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0)), url('images/darjeeling.jpg'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 20px; text-align: center; color: white; border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px); position: relative; z-index: 1;">
+    <h2 style="color: rgb(241, 19, 241);">Earn Rewards by Referring Friends!</h2>
+    <p>Refer a friend and earn a discount on your next tour booking. Simply share your referral link below.</p>
+    <div class="referral-form">
+        <input type="text" value="http://ayushTourAndTravels/referral/123" readonly class="referral-input" id="referralLink">
+        <button class="copy-button" style="background-color:purple;"onclick="copyReferralLink()">Copy Link</button>
+    </div>
+</div>
+</section>
+
+<script>
+function subscribe() {
+    const button = document.querySelector('.subs');
+    if (button.innerText == 'Subscribe') {
+        button.innerText = 'Subscribed';
+        button.classList.add('issubs');
+    } else {
+        button.innerText = 'Subscribe';
+        button.classList.remove('issubs');
+    }
+}
+function copyReferralLink() {
+    var copyText = document.getElementById("referralLink");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    alert("Referral link copied: " + copyText.value);
+}
+</script>
+<section class="testimonial-section" style="color: purple;">
+<h2 style="color: purple;">What Our Clients Say</h2>
+<div class="testimonial-container">
+    <div class="testimonial-card" style="color: white;">
+        <p style="color: white;">Ayush Tours made our vacation unforgettable. The luxury tour package was beyond our expectations! Highly recommend!"</p>
+        <h4 style="color: white;">- John Doe</h4>
+        <p>Traveler</p>
+    </div>
+    <div class="testimonial-card">
+        <p style="color: white;">"The adventure trip was thrilling! Everything was so well-organized, and the guides were fantastic. Truly an amazing experience."</p>
+        <h4 style="color: white;">- Sarah Lee</h4>
+        <p style="color: white;">Explorer</p>
+    </div>
+    <div class="testimonial-card">
+        <p style="color: white;">"I had a fantastic time on my cruise vacation. The services were top-notch, and the views were breathtaking. Thank you, Ayush Tours!"</p>
+        <h4 style="color: white;">- Robert King</h4>
+        <p style="color: white;">Voyager</p>
+    </div>
+</div>
+<div class="testimonial-navigation">
+    <button id="prevTestimonial" style="background-color:purple;" onclick="prevTestimonial();">Prev</button>
+    <button id="nextTestimonial" style="background-color:purple;" onclick="nextTestimonial()">Next</button>
+</div>
+</section>
+<script>
+let currentTestimonialIndex = 0;
+const testimonials = document.querySelectorAll('.testimonial-card');
+const totalTestimonials = testimonials.length;
+function showTestimonial(index) {
+    testimonials.forEach((testimonial, i) => {
+        testimonial.style.display = (i === index) ? 'block' : 'none';
+    });
+}
+function prevTestimonial() {
+    currentTestimonialIndex = (currentTestimonialIndex === 0) ? totalTestimonials - 1 : currentTestimonialIndex - 1;
+    showTestimonial(currentTestimonialIndex);
+}
+function nextTestimonial() {
+    currentTestimonialIndex = (currentTestimonialIndex === totalTestimonials - 1) ? 0 : currentTestimonialIndex + 1;
+    showTestimonial(currentTestimonialIndex);
+}
+showTestimonial(currentTestimonialIndex);
+</script><br><br><br>
+<section id="contact" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('hawamahal.png'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 20px; text-align: center; color: white; border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px); position: relative; z-index: 1;">
+    <h2 style="font-size: 3rem; font-weight: 700; color:purple; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px;">Contact Us</h2>
+    <p style="font-size: 1.2rem; color: #fff; margin-bottom: 40px; line-height: 1.6;">We’d love to hear from you! Get in touch with us for any queries, suggestions, or travel inquiries. We'll get back to you as soon as possible.</p>
+   
+    <form action="https://api.web3forms.com/submit" method="POST" style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding: 30px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+        <input type="hidden" name="access_key" value="5464c6b8-ea4c-4f93-adfb-54080a58e13c">
+
+        <label for="name" style="font-size: 1.1rem; font-weight: 600; color: #fff;">Your Name:</label>
+        <input type="text" id="name" name="name" required style="padding: 15px; font-size: 1rem; border-radius: 8px; border: 2px solid #ccc; background: rgba(255, 255, 255, 0.9); color: #333; transition: all 0.3s ease-in-out;">
+    
+        <label for="number" style="font-size: 1.1rem; font-weight: 600; color: #fff;">Phone Number:</label>
+        <input type="number" id="number" name="Phone Number" required style="padding: 15px; font-size: 1rem; border-radius: 8px; border: 2px solid #ccc; background: rgba(255, 255, 255, 0.9); color: #333; transition: all 0.3s ease-in-out;">
+        
+        <label for="email" style="font-size: 1.1rem; font-weight: 600; color: #fff;">Your Email:</label>
+        <input type="email" id="email" name="email" required style="padding: 15px; font-size: 1rem; border-radius: 8px; border: 2px solid #ccc; background: rgba(255, 255, 255, 0.9); color: #333; transition: all 0.3s ease-in-out;">
+     
+        <label for="message" style="font-size: 1.1rem; font-weight: 600; color: #fff;">Your Message:</label>
+        <textarea id="message" name="message" required style="padding: 15px; font-size: 1rem; border-radius: 8px; border: 2px solid #ccc; background: rgba(255, 255, 255, 0.9); color: #333; min-height: 150px; transition: all 0.3s ease-in-out;"></textarea>
+
+        <button type="submit" style="background-color:purple;" onclick="alert('Your Request has been sent to the higher authority');" style="background-color: blue; color: white; padding: 12px 30px; border: none; border-radius: 30px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease-in-out;">
+            Send Message
+        </button>
+    </form>
+</section>
+</main><br><br><br><br><br><br><br>
+<footer style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('hawamahal.png'); background-size: cover; background-position: center; background-attachment: fixed; padding: 80px 20px; text-align: center; color: white; border-radius: 25px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); backdrop-filter: blur(12px); position: relative; z-index: 1;">
+
+    <div class="footer-container" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px;">
+        <div class="footer-left" style="flex: 1; min-width: 300px; padding: 10px; text-align: left;">
+            <h3 style="font-size: 26px; color:purple; font-weight: 700; margin-bottom: 15px;">Ayush Tours</h3>
+            <p style="font-size: 16px; line-height: 1.6;">Your travel partner in exploring India's diverse beauty. Discover India with our expertly guided tours and customized packages. Let's make your travel experience unforgettable!</p>
+            <p style="font-size: 14px; color: white;">&copy; 2024 Ayush Tours. All rights reserved.</p>
+        </div>
+
+        <div class="footer-middle" style="flex: 1; min-width: 300px; padding: 10px; text-align: left;">
+            <h4 style="font-size: 22px; color:purple; font-weight: 600; margin-bottom: 15px;">Contact Information</h4>
+            <ul style="list-style-type: none; padding: 0; font-size: 16px; color: white;">
+                <li><strong>Address:</strong> 123 Travel Street, Delhi, India</li>
+                <li><strong>Phone:</strong> +91 9305241408</li>
+                <li><strong>Email:</strong> <a href="mailto:info@ayushtours.com" style="color: white; text-decoration: none; transition: color 0.3s;">info@ayushtours.com</a></li>
+            </ul>
+        </div>
+        <div class="footer-right" style="flex: 1; min-width: 300px; padding: 10px; text-align: left;">
+            <h4 style="font-size: 22px; color: purple; font-weight: 600; margin-bottom: 15px;">Follow Us</h4>
+            <div style="display: flex; gap: 20px;">
+                <a href="https://facebook.com" target="_blank" style="color: #3b5998; font-size: 28px; text-decoration: none; transition: color 0.3s, transform 0.3s;">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" style="color: #1DA1F2; font-size: 28px; text-decoration: none; transition: color 0.3s, transform 0.3s;">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" style="color: #C13584; font-size: 28px; text-decoration: none; transition: color 0.3s, transform 0.3s;">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" style="color: #0e76a8; font-size: 28px; text-decoration: none; transition: color 0.3s, transform 0.3s;">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://youtube.com" target="_blank" style="color: #FF0000; font-size: 28px; text-decoration: none; transition: color 0.3s, transform 0.3s;">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="map" style="margin-top: 40px; text-align: center;">
+        <h3 style="font-size: 22px; color: violet; margin-bottom: 20px;">Find Us Here</h3>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3300.0806020144744!2d77.4370492153821!3d28.613939794216486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfc3a95b8b21f%3A0x7f3b99a7d2920a!2sGhaziabad%2C%20Uttar%20Pradesh%2C%20India!5e0!3m2!1sen!2sus!4v1695232200456!5m2!1sen!2sus" width="100%" height="400" style="border: 0; border-radius: 10px;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <div class="footer-bottom" style="margin-top: 40px; text-align: center; font-size: xxx-large; color: black; font-weight: 1000;">
+        <ul style="list-style-type: none; padding: 0; display: inline-flex; gap: 30px; font-size: 14px; margin-bottom: 20px;">
+            <li><a href="privacy.html" style="color: white; text-decoration: none; transition: color 0.3s;">Privacy Policy</a></li>
+            <li><a href="terms.html" style="color: white; text-decoration: none; transition: color 0.3s;">Terms of Service</a></li>
+            <li><a href="sitemap.html" style="color: white; text-decoration: none; transition: color 0.3s;">Sitemap</a></li>
+        </ul>
+        <p style="font-size: 14px; margin-top: 10px;">Powered by Ayush Tours. Designed for seamless travel experiences.</p>
+    </div>
+</footer>
+   
+   
+</body>
+</html>

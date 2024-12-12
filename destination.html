@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Chronicles - Destinations</title>
+   <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background-color: ivory;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.0)), url('images/hawamahal.png');
+    background-size: contain;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-transform: uppercase;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    justify-content: center;
+    padding: 20px;
+}
+
+.destination {
+    background-color: white;
+    border-radius: 10px;
+    margin: 15px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.destination:hover {
+    transform: scale(1.05);
+}
+
+.destination img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.destination h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.destination p {
+    padding: 0 15px;
+    color: #777;
+    font-size: 0.95em;
+}
+
+.btn, .know-more-btn {
+    background-color: #008cba;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.btn:hover, .know-more-btn:hover {
+    background-color: #005f7f;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    margin-top: auto;
+}
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; 
+    max-width: 500px;
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h3 {
+    font-size: 1.8em;
+    color: #333;
+}
+
+.modal p {
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+   </style>
+</head>
+<body>
+    <header>
+        <h1>Explore Our Destinations</h1>
+    </header>
+    <div class="container">
+        <div class="destination">
+            <img src="images/himalaya.webp" alt="Himalayas">
+            <h3>Himalayas</h3>
+            <p>Discover the breathtaking beauty of the Himalayas, where majestic peaks touch the sky.</p>
+            <button class="btn" onclick="openModal('himalaya')" >Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/kerala.jpeg" alt="Kerala">
+            <h3>Kerala</h3>
+            <p>Explore the lush backwaters of Kerala, often referred to as 'God's Own Country.'</p>
+            <button class="btn" onclick="openModal('kerala')">Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/hawamahal.png" alt="Rajasthan">
+            <h3>Rajasthan</h3>
+            <p>Immerse yourself in the rich heritage of Rajasthan, home to majestic forts and palaces.</p>
+            <button class="btn" onclick="openModal('rajasthan')">Learn More</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="destination">
+            <img src="images/andman.jpg" alt="Andaman Islands">
+            <h3>Andaman Islands</h3>
+            <p>Visit the pristine beaches of the Andaman Islands, known for their crystal-clear waters and vibrant marine life.</p>
+            <button class="btn" onclick="openModal('andaman')">Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/mysore.jpg" alt="Mysore">
+            <h3>Mysore</h3>
+            <p>Explore the royal heritage of Mysore, famous for its palaces, gardens, and vibrant culture.</p>
+            <button class="btn" onclick="openModal('mysore')">Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/leh.jpg" alt="Leh Ladakh">
+            <h3>Leh Ladakh</h3>
+            <p>Experience the breathtaking landscapes of Leh Ladakh, known for its mountains and rich Buddhist culture.</p>
+            <button class="btn" onclick="openModal('leh')">Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/darjeeling.jpg" alt="Darjeeling">
+            <h3>Darjeeling</h3>
+            <p>Famous for its tea plantations and panoramic views of the Himalayas, Darjeeling is a serene hill station.</p>
+            <button class="btn" onclick="openModal('darjeeling')">Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/varanasi.webp" alt="Varanasi">
+            <h3>Varanasi</h3>
+            <p>Immerse yourself in the spiritual ambiance of Varanasi, one of the world's oldest cities.</p>
+            <button class="btn" onclick="openModal('varanasi')">Learn More</button>
+        </div>
+
+        <div class="destination">
+            <img src="images/mumbai.jpg" alt="Mumbai">
+            <h3>Mumbai</h3>
+            <p>Experience the hustle and bustle of Mumbai, India's financial capital. From the iconic Gateway of India to Marine Drive, explore Mumbai's modern and traditional charm.</p>
+            <button class="btn" onclick="openModal('mumbai')">Learn More</button>
+        </div>
+    </div>
+    <div id="destinationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Destination Details</h3>
+            <p id="modal-description">Some details about the destination...</p>
+            <button class="know-more-btn" id="knowMoreBtn" onclick="redirectToPackage()">Know More</button>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Wanderlust Chronicles. All rights reserved.</p>
+    </footer>
+    <script src="js/btn.js"></script>
+</body>
+</html>

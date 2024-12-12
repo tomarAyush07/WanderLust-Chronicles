@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Packages - Customize Your Adventure</title>
+    <link rel="icon" type="image/x-icon" href="images/ayushtravels.jpg">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden;
+        }
+        header {
+             background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.0)), url('images/hawamahal.png');
+            background-size: contain;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 30px 20px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .package {
+            background: #fff;
+            border-radius: 10px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: calc(33% - 40px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .package:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .package img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .package h3 {
+            margin: 15px 0;
+            color: #222;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .package p {
+            text-align: justify;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        .price {
+            font-size: 1.6em;
+            color: #f7d142;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .btn-customize-package {
+            background-color: #28a745;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: block;
+            margin: 20px auto 0;
+            width: 90%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-customize-package:hover {
+            background-color: #218838;
+            transform: scale(1.02);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h3 {
+            font-size: 2em;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #222;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #total-price {
+            font-size: 1.6em;
+            color: #f7d142;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .btn-confirm-package {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-confirm-package:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 223, 0, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 2em;
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .celebration.active {
+            display: block;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .package {
+                width: calc(50% - 40px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .package {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        function toggleModal(packageId) {
+            const modal = document.getElementById(packageId);
+            modal.style.display = (modal.style.display === "block") ? "none" : "block";
+        }
+
+        function confirmPackage() {
+            document.getElementById('customization-modal').style.display = "none";
+            document.getElementById('celebration').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('celebration').classList.remove('active');
+            }, 3000);
+        }
+
+        function updatePriceBasedOnSelection() {
+            const accommodation = parseInt(document.getElementById('accommodation').value) || 0;
+            const mealPlan = parseInt(document.getElementById('meal-plan').value) || 0;
+            const transport = parseInt(document.getElementById('transport').value) || 0;
+            const numPeople = parseInt(document.getElementById('num-people').value) || 1;
+            const numDays = parseInt(document.getElementById('num-days').value) || 1;
+            const numRooms = parseInt(document.getElementById('num-rooms').value) || 1;
+
+            const totalPrice = (accommodation + mealPlan + transport) * numDays *numRooms;
+            document.getElementById('total-price').innerText = `Total Price: ₹${totalPrice}`;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>WANDERLUST CHRONICLES</h1>
+    </header>
+
+    <div class="container">
+        <div class="package">
+            <h3>Spiritual Varanasi</h3>
+            <img src="images/varanasi.webp" alt="Varanasi Tour">
+            <p>Immerse yourself in the spiritual essence of Varanasi, one of the oldest living cities in the world. Experience the Ganga Aarti, explore ancient temples, and witness the unique culture of this holy city.</p>
+            <div class="price">Price: ₹999</div>
+            <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+        </div>
+    <div class="package">
+        <h3>Explore Ladakh</h3>
+        <img src="images/leh.jpg" alt="">
+        <p>Experience the stunning landscapes and unique culture of Ladakh. From high mountain passes to serene monasteries, this tour offers an unforgettable adventure.</p>
+        <div class="price">Price: ₹1499</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Charming Rajasthan</h3>
+        <img src="images/bhtargao.jpeg" alt="">
+        <p>Explore the royal state of Rajasthan, known for its rich history, grand forts, and vibrant culture. Experience the beauty of cities like Jaipur, Udaipur, and Jaisalmer.</p>
+        <div class="price">Price: ₹1499</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>South Indian Odyssey</h3>
+        <img src="images/nagaland.jpg" alt="">
+        <p>Discover the rich culture and natural beauty of South India, from the backwaters of Kerala to the temples of Tamil Nadu.</p>
+        <div class="price">Price: ₹2499</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Enchanting Sikkim</h3>
+        <img src="images/sikkim.jpeg" alt="">
+        <p>Experience the serene beauty of Sikkim with its stunning landscapes, vibrant culture, and breathtaking views of the Himalayas.</p>
+        <div class="price">Price: ₹1599</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Spiritual Tamil Nadu</h3>
+        <img src="images/kerala.jpeg" alt="">
+        <p>Explore the temples and rich history of Tamil Nadu, experiencing its vibrant culture and traditional art forms.</p>
+        <div class="price">Price: ₹2999</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Discover Nagaland</h3>
+        <img src="images/nagaland.jpg" alt="">
+        <p>Delve into the unique culture and traditions of Nagaland. Experience traditional festivals, local cuisine, and beautiful landscapes.</p>
+        <div class="price">Price: ₹2199</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Bengal Heritage Tour</h3>
+        <img src="images/bengal.jpeg" alt="">
+        <p>Explore the rich cultural heritage of West Bengal, visiting Kolkata, the Sundarbans, and Darjeeling.</p>
+        <div class="price">Price: ₹1499</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Ranchi Wildlife Adventure</h3>
+        <img src="images/balaji.jpeg" alt="">
+        <p>Experience the lush greenery and wildlife of Ranchi. Explore waterfalls, national parks, and enjoy nature treks.</p>
+        <div class="price">Price: ₹3499</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Delhi Historical Tour</h3>
+        <img src="images/banglore.jpg" alt="">
+        <p>Discover the historical and cultural richness of Delhi, from ancient forts to modern attractions.</p>
+        <div class="price">Price: ₹499</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Punjab Culture and Cuisine</h3>
+        <img src="images/mysore.jpg" alt="">
+        <p>Explore the vibrant culture and delicious cuisine of Punjab, visiting cities like Amritsar and Ludhiana.</p>
+        <div class="price">Price: ₹1999</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    <div class="package">
+        <h3>Rameshwaram Spiritual Journey</h3>
+        <img src="images/ramesh.webp" alt="">
+        <p>Visit the sacred town of Rameshwaram, known for its temples and stunning coastal views. Experience the spiritual heritage of this holy place.</p>
+        <div class="price">Price: ₹2999</div>
+        <button class="btn-customize-package" onclick="toggleModal('customization-modal')">Customize Your Package</button>
+    </div>
+    </div>
+  
+
+    <div id="customization-modal" class="modal">
+        <div class="modal-content">
+            <h3>Customize Your Package</h3>
+            <div class="form-group">
+                <label for="num-people">Number of People:</label>
+                <input type="number" id="num-people" value="1" min="1" onchange="updatePriceBasedOnSelection()">
+            </div>
+            <div class="form-group">
+                <label for="num-days">Number of Days:</label>
+                <input type="number" id="num-days" value="1" min="1" onchange="updatePriceBasedOnSelection()">
+            </div>
+            <div class="form-group">
+                <label for="num-rooms">Number of Rooms:</label>
+                <input type="number" id="num-rooms" value="1" min="1" onchange="updatePriceBasedOnSelection()">
+            </div>
+            <div class="form-group">
+                <label for="accommodation">Accommodation:</label>
+                <select id="accommodation" onchange="updatePriceBasedOnSelection()">
+                    <option value="200">Standard - ₹200/night</option>
+                    <option value="200">Deluxe - ₹300/night</option>
+                    <option value="400">Luxury - ₹400/night</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="meal-plan">Meal Plan:</label>
+                <select id="meal-plan" onchange="updatePriceBasedOnSelection()">
+                    <option value="0">No Meals - ₹0</option>
+                    <option value="100">Breakfast - ₹100/day</option>
+                    <option value="300">All Meals - ₹300/day</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="transport">Transport:</label>
+                <select id="transport" onchange="updatePriceBasedOnSelection()">
+                    <option value="0">No Transport - ₹0</option>
+                    <option value="50">Shared - ₹50/day</option>
+                    <option value="80">Private - ₹80/day</option>
+                </select>
+            </div>
+            <div id="total-price">price</div>
+            <button class="btn-confirm-package" onclick="confirmPackage()">Done</button>
+        </div>
+    </div>
+
+    <div id="celebration" class="celebration">
+        <p>Your package is confirmed! We are waiting for you!</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Ayush Tours and Travels. All rights reserved.</p>
+    </footer>
+</body>
+</html>

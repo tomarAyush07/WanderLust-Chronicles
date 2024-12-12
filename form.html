@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('kerala.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #555;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, textarea, select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            display: flex;
+            justify-content: center;
+        }
+        .button input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="form-container">
+        <h1>BOOK A RESERVATION FOR HALL</h1>
+        <form action="">
+            <h2>Personal Details</h2>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter Your Name" required>
+            <label for="contact">Contact Number:</label>
+            <input type="number" id="contact" placeholder="Enter Your Contact Number" required>
+            <label for="email">Enter Your Email:</label>
+            <input type="email" id="email" placeholder="Enter Your Email">
+            
+            <h2>Event Details</h2>
+            <label for="event">Type of Event</label>
+            <div>
+                <input type="radio" id="birthday" name="event" value="Birthday">
+                <label for="birthday">Birthday</label>
+            </div>
+            <div>
+                <input type="radio" id="kitty" name="event" value="Kitty Party">
+                <label for="kitty">Kitty Party</label>
+            </div>
+            <div>
+                <input type="radio" id="get-together" name="event" value="Get Together">
+                <label for="get-together">Get Together</label>
+            </div>
+            <div>
+                <input type="radio" id="meeting" name="event" value="Business Meeting">
+                <label for="meeting">Business Meeting</label>
+            </div>
+            <div>
+                <input type="radio" id="party" name="event" value="Business Party">
+                <label for="party">Business Party</label>
+            </div>
+            <div>
+                <input type="radio" id="other" name="event" value="Other">
+                <label for="other">Other</label>
+                <input type="text" placeholder="Please specify">
+            </div>
+            
+            <h2>Additional Services</h2>
+            <textarea id="services" rows="4" placeholder="Enter additional services like decoration services, sound and lighting setup, parking arrangements, etc."></textarea>
+            
+            <div class="button">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

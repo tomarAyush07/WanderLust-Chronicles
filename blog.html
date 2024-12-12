@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WANDERLUST CHRONICLES</title>
+    <link rel="icon" type="image/x-icon" href="images/ayushtravels.jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.0)), url('images/hawamahal.png');
+            background-size: c;
+            text-align: center;
+            padding: 30px;
+            background-color: #1a237e; /* Dark Blue */
+            color: white;
+            font-size: 2em;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .main-content {
+            flex: 3;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: ivory;
+        }
+
+        a {
+            text-decoration: none;
+            color: #388e3c; /* Green */
+        }
+
+        .post {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+        }
+
+        .post h2 {
+            margin: 10px 0;
+        }
+
+        .post p {
+            margin: 10px 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            background-color: #333;
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #388e3c; /* Green */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #2e7d32; /* Darker Green */
+        }
+
+        .categories, .popular-posts {
+            margin: 20px 0;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .categories a, .popular-posts a {
+            display: block;
+            margin: 5px 0;
+            color: #388e3c; /* Green */
+            text-decoration: none;
+        }
+
+        .author-bio {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .author-bio img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            float: left;
+            margin-right: 15px;
+        }
+        .author-bio {
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0; 
+            display: flex; 
+            flex-direction: column;
+            align-items: flex-start; 
+            gap: 15px; 
+}
+
+            .author-bio img {
+                width: 100px;
+                height: 100px; 
+                border-radius: 50%; 
+                margin-right: 20px;
+                margin-bottom: 15px; 
+            }
+
+            .author-bio h3 {
+                margin-bottom: 10px;
+            }
+
+            .author-bio h4 {
+                margin-top: 20px;
+                color: #1a237e; 
+            }
+
+            .author-bio ul {
+                list-style-type: disc;
+                padding-left: 20px;
+            }
+
+            .author-bio ul li {
+                margin-bottom: 8px;
+            }
+
+            .author-bio p {
+                font-size: 1rem;
+                line-height: 1.6; 
+                color: #555;
+            }
+
+            .author-bio a {
+                color: #388e3c; 
+                text-decoration: none;
+            }
+
+            .author-bio a:hover {
+                text-decoration: underline;
+            }
+
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: calc(49% - 10px);
+            height: 190px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonials {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial {
+            margin-bottom: 15px;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            color: #555;
+        }
+
+        .travel-tips {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .main-content {
+                margin-bottom: 20px;
+            }
+
+            .sidebar {
+                margin-bottom: 20px;
+            }
+        }
+        .popular-posts, .contact, .social-media {
+    margin: 20px 0;
+    padding: 10px;
+    background: rgba(17, 3, 3, 0.1);
+    border-radius: 5px;
+}
+
+.popular-posts a, .social-media a {
+    display: block;
+    margin: 5px 0;
+    color: green;
+    text-decoration: none;
+}
+
+.popular-posts a:hover, .social-media a:hover {
+    color: darkgreen;
+}
+
+.contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact li {
+    margin: 5px 0;
+}
+
+.contact a {
+    color: green;
+    text-decoration: none;
+}
+
+.contact a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>WANDERLUST CHRONICLES BLOG</h1>
+        <p>Your guide to unforgettable journeys</p>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <h2>Latest Posts</h2>
+
+            <div class="post">
+                <h2><a href="#">Exploring the Enchanting Beaches of Goa</a></h2>
+                <p>Discover the pristine beaches, vibrant nightlife, and delicious cuisine of Goa. Whether you're looking to relax or party, Goa has something for everyone.</p>
+                <p><a href="#" class="btn">Read More</a></p>
+            </div>
+
+            <div class="post">
+                <h2><a href="#">Top 10 Tips for Traveling on a Budget</a></h2>
+                <p>Traveling doesn't have to break the bank. Here are our top ten tips to save money while exploring new destinations.</p>
+                <p><a href="#" class="btn">Read More</a></p>
+            </div>
+
+            <div class="post">
+                <h2><a href="#">Cultural Experiences: Festivals You Must Attend</a></h2>
+                <p>Immerse yourself in the local culture by attending these vibrant festivals around the world. From Diwali in India to Carnival in Brazil, celebrate diversity!</p>
+                <p><a href="#" class="btn">Read More</a></p>
+            </div>
+
+            <div class="post">
+                <h2><a href="#">Sustainable Travel: How to Make a Difference</a></h2>
+                <p>Learn how you can travel responsibly and support local communities while minimizing your environmental impact.</p>
+                <p><a href="#" class="btn">Read More</a></p>
+            </div>
+
+            <div class="post">
+                <h2><a href="#">Hidden Gems: Offbeat Destinations to Explore</a></h2>
+                <p>Discover lesser-known travel destinations that offer unique experiences away from the tourist crowds.</p>
+                <p><a href="#" class="btn">Read More</a></p>
+            </div>
+
+            <h2>Travel Tips</h2>
+            <div class="travel-tips">
+                <h3>Essential Tips for First-Time Travelers</h3>
+                <ul>
+                    <li>Always have a digital and physical copy of important documents.</li>
+                    <li>Learn basic phrases in the local language.</li>
+                    <li>Keep an emergency kit with essentials like medications and first-aid supplies.</li>
+                    <li>Stay connected with family and friends through regular updates.</li>
+                    <li>Respect local customs and traditions to enrich your travel experience.</li>
+                </ul>
+            </div>
+
+            <h2>Categories</h2>
+            <div class="categories">
+                <a href="#">Adventure</a>
+                <a href="#">Cultural Insights</a>
+                <a href="#">Travel Tips</a>
+                <a href="#">Food & Travel</a>
+                <a href="#">Destination Guides</a>
+            </div>
+
+            <h2>Author Bio</h2>
+<div class="author-bio">
+    <img src="images/k.jpg" alt="Author Photo">
+    <h3>Ayush Singh Tomar</h3>
+    <p><strong>Travel Enthusiast & Blogger</strong></p>
+    <p>Ayush is passionate about exploring new places and sharing his travel experiences to inspire others. He believes in sustainable travel and often writes about unique cultures and adventures. Over the past few years, Ayush has traveled to numerous countries and has become an expert in offbeat destinations, helping fellow travelers discover hidden gems around the world.</p>
+    
+    <h4>Qualifications:</h4>
+    <ul>
+        <li>Master’s in Tourism Management</li>
+        <li>Certified Travel Guide</li>
+        <li>5+ Years of Travel Blogging Experience</li>
+        <li>Published in major travel magazines like <em>Travel & Leisure</em> and <em>Lonely Planet</em></li>
+    </ul>
+
+    <h4>Professional Experience:</h4>
+    <ul>
+        <li>Worked as a Travel Consultant for 3 years at Wanderlust Travels</li>
+        <li>Frequent Contributor to <em>Global Explorer</em> magazine</li>
+        <li>Featured in popular travel podcasts like <em>The Roaming Nomad</em> and <em>Travel Tales</em></li>
+    </ul>
+
+    <h4>Awards & Recognition:</h4>
+    <ul>
+        <li><strong>Best Travel Blogger of the Year 2023</strong> – Travel Blogger Awards</li>
+        <li><strong>Top 100 Influential Travel Bloggers</strong> – Global Travel Network</li>
+        <li><strong>Award for Excellence in Sustainable Travel</strong> – Green Earth Foundation</li>
+    </ul>
+
+    <h4>Follow Ayush:</h4>
+    <ul>
+        <li><a href="https://facebook.com/ayushtravels" target="_blank">Facebook</a></li>
+        <li><a href="https://instagram.com/ayushtravels" target="_blank">Instagram</a></li>
+        <li><a href="https://twitter.com/ayushtravels" target="_blank">Twitter</a></li>
+        <li><a href="https://youtube.com/ayushtravels" target="_blank">YouTube</a></li>
+    </ul>
+
+    <h4>Personal Interests & Hobbies:</h4>
+    <p>When Ayush isn’t traveling, you’ll find him enjoying photography, hiking, and discovering new cuisines. He also enjoys connecting with like-minded travel enthusiasts on social media, sharing tips and tricks for making travel affordable and memorable.</p>
+    
+    <p><em>"Travel far enough, you meet yourself." - Ayush Singh Tomar</em></p>
+</div>
+        </div>
+
+
+        <aside class="sidebar">
+            <h2>Popular Posts</h2>
+            <div class="popular-posts">
+                <a href="#">10 Must-Visit Places in India</a>
+                <a href="#">How to Pack Light for Any Trip</a>
+                <a href="#">The Best Street Food Around the World</a>
+                <a href="#">Adventure Activities You Can't Miss</a>
+            </div>
+            <h2>Contact Us</h2>
+<div class="contact">
+    <p>If you have any questions, feedback, or travel inquiries, feel free to reach out. We're always happy to help!</p>
+    <ul>
+        <li>Email: <a href="mailto:info@wanderlustchronicles.com">info@wanderlustchronicles.com</a></li>
+        <li>Phone: +1 (555) 123-4567</li>
+        <li>Address: 123 Adventure Lane, Travel City, World 4567</li>
+    </ul>
+</div>
+
+<h2>Follow Us on Social Media</h2>
+<div class="social-media">
+    <p>Stay connected with us for the latest updates and travel inspiration!</p>
+    <ul>
+        <li><a href="#" target="_blank">Facebook</a></li>
+        <li><a href="#" target="_blank">Instagram</a></li>
+        <li><a href="#" target="_blank">Twitter</a></li>
+        <li><a href="#" target="_blank">Pinterest</a></li>
+    </ul>
+</div>
+            <h2>Gallery</h2>
+            <div class="gallery">
+                <img src="images/nagaland.jpg" alt="Beach">
+                <img src="images/7sis.jpg" alt="Mountains">
+                <img src="images/gujrat1.jpg" alt="City">
+                <img src="images/hawamahal.png" alt="Forest">
+                <img src="images/taj.jpeg" alt="Food">
+                <img src="images/balaji.jpeg" alt="Culture">
+                <img src="images/banglore.jpg" alt="">
+                <img src="images/bhtargao.jpeg" alt="">
+                <img src="images/bengal.jpeg" alt="">
+                <img src="images/ramesh.webp" alt="">
+                <img src="images/rameshwaram.jpeg" alt="">
+                <img src="images/rammandir.jpeg" alt="">
+                <img src="images/jk.jpeg" alt="">
+                <img src="images/sikkim.jpeg" alt="">
+                <img src="images/somnath.jpeg" alt="">
+                <img src="images/kashi.jpeg" alt="">
+                <img src="images/kedarnath.jpeg" alt="">
+                <img src="images/arunachal.jpeg" alt="">
+                <img src="images/mumbai.jpg" alt="">
+                <img src="images/k.jpg" alt="">
+            </div>
+        </aside>
+    </div>
+
+    <h2>Testimonials</h2>
+    <div class="testimonials">
+        <div class="testimonial">
+            <p>"Ayush Tours made our vacation unforgettable! The itinerary was perfect, and the guides were knowledgeable and friendly." - Ravi S.</p>
+        </div>
+        <div class="testimonial">
+            <p>"We loved every moment of our trip! The attention to detail was remarkable, and we felt truly taken care of." - Priya M.</p>
+        </div>
+        <div class="testimonial">
+            <p>"An excellent travel agency with personalized service. I can't recommend them enough!" - Anjali R.</p>
+        </div>
+    </div>
+    
+
+    <div class="footer">
+        <p>&copy; 2024 Ayush Tours and Travels. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

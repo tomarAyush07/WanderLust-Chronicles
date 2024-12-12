@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot for Tours and Travel</title>
+    <style>
+        .chatbox-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .chatbox-container {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: none; 
+            flex-direction: column;
+        }
+        .chatbox-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .chatbox-messages {
+            padding: 10px;
+            height: 280px;
+            overflow-y: auto;
+            border-bottom: 2px solid #eee;
+        }
+
+        .chatbox-input-container {
+            display: flex;
+            padding: 10px;
+        }
+        .chatbox-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .chatbox-send-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chatbox-send-btn:hover {
+            background-color: #45a049;
+        }
+
+        .chatbox-message {
+            margin: 5px 0;
+        }
+        .user-message {
+            text-align: right;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px;
+            border-radius: 10px;
+            max-width: 70%;
+            margin-left: auto;
+        }
+        .bot-message {
+            text-align: left;
+            background-color: #f1f1f1;
+            color: #333;
+            padding: 8px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbox-icon" onclick="toggleChatbox()">
+        💬
+    </div>
+
+    <div class="chatbox-container" id="chatboxContainer">
+        <div class="chatbox-header">
+            <h3>TourBot</h3>
+        </div>
+        <div class="chatbox-messages" id="chatboxMessages">
+        </div>
+        <div class="chatbox-input-container">
+            <input type="text" id="chatInput" class="chatbox-input" placeholder="Ask something..." />
+            <button class="chatbox-send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        function toggleChatbox() {
+            let chatbox = document.getElementById('chatboxContainer');
+            chatbox.style.display = (chatbox.style.display === 'none' || chatbox.style.display === '') ? 'flex' : 'none';
+        }
+        function botResponse(message) {
+            let response = '';
+
+            if (message.includes('tour') || message.includes('destination')) {
+                response = "We offer various tours like luxury tours, adventure trips, and cruise vacations. What are you interested in?";
+            } else if (message.includes('offers')) {
+                response = "Check out our latest offers on the homepage for exclusive deals on tours!";
+            } else {
+                response = "I'm not sure about that. Can I assist you with anything else related to tours and travels?";
+            }
+            return response;
+        }
+        function sendMessage() {
+            let userMessage = document.getElementById('chatInput').value;
+            if (userMessage.trim() === '') return;
+            displayMessage(userMessage, 'user');
+            let botMessage = botResponse(userMessage);
+            setTimeout(() => {
+                displayMessage(botMessage, 'bot');
+            }, 1000);
+            document.getElementById('chatInput').value = '';
+        }
+        function displayMessage(message, sender) {
+            let messageContainer = document.getElementById('chatboxMessages');
+            let messageElement = document.createElement('div');
+            messageElement.classList.add('chatbox-message');
+            
+            if (sender === 'user') {
+                messageElement.classList.add('user-message');
+            } else {
+                messageElement.classList.add('bot-message');
+            }
+            
+            messageElement.innerText = message;
+            messageContainer.appendChild(messageElement);
+
+            // Scroll to the bottom of the chatbox
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+    
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            width: 80%;
+            max-width: 500px;
+        }
+    
+        .modal-content {
+            text-align: center;
+        }
+    
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .modal-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    
+        .modal-btn:hover {
+            background-color: #0056b3;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="destination">
+        <img src="images/himalaya.webp" alt="Himalayas">
+        <h3>Himalayas</h3>
+        <p>Discover the breathtaking beauty of the Himalayas, where majestic peaks touch the sky. From the serene lakes to the thrilling trekking trails, this region offers adventure and tranquility. Experience the rich culture and the warm hospitality of the mountain communities.</p>
+        <button id="learnMoreBtn" class="btn">Learn More</button>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>About the Himalayas</h3>
+            <p>The Himalayas are home to the world's highest peaks, including Mount Everest and Kanchenjunga. They offer a unique blend of adventure, culture, and spirituality. Plan a trek, explore serene monasteries, or immerse yourself in the local mountain lifestyle.</p>
+            <a href="https://en.wikipedia.org/wiki/Himalayas" target="_blank" class="modal-btn">Read More</a>
+        </div>
+    </div>
+    
+    
+    <script>
+        const modal = document.getElementById("modal");
+        const overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        document.body.appendChild(overlay);
+        
+        const learnMoreBtn = document.getElementById("learnMoreBtn");
+        const closeModal = document.querySelector(".close-btn");
+    
+        learnMoreBtn.addEventListener("click", () => {
+            modal.style.display = "block";
+            overlay.style.display = "block";
+        });
+    
+        closeModal.addEventListener("click", () => {
+            modal.style.display = "none";
+            overlay.style.display = "none";
+        });
+    
+        overlay.addEventListener("click", () => {
+            modal.style.display = "none";
+            overlay.style.display = "none";
+        });
+    </script>
+    
+</body>
+</html>
